@@ -1,19 +1,23 @@
-import getType from './getType.js'
+// 산술 연산자(arithmetic operator)
 
+console.log(1 + 2)
+console.log(5 - 7)
+console.log(10 / 2)
+console.log(7 % 5)
 
-console.log(typeof 'hello world');
-console.log(typeof 123);
-console.log(typeof true);
-console.log(typeof undefined);
-console.log(typeof null);
-console.log(typeof {});
-console.log(typeof []);
+// 할당 연산자(assignmnet operator)
 
+let a = 2
+// a = a + 1
+// a += 1
 
+// a = a - 1
+// a -= 1
 
-console.log(getType(123));
-console.log(getType(false));
-console.log(getType('hi'));
-console.log(getType({}));
-console.log(getType([]));
-console.log(getType(null));
+// a = a * 1
+// a *= 1
+
+// a = a / 1
+// a /= 1
+
+console.log(a)
