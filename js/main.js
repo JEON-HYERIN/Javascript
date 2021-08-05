@@ -1,39 +1,19 @@
-// 콜백(Callbak)
-// 함수의 인수로 사용되는 함수
-
-// setTimeout(함수, 시간)
+import getType from './getType.js'
 
 
-// function timeout(cb) {
-//   setTimeout(() => {
-//     console.log('hello!')
-//     cb();
-//   }, 3000);
-// };
-
-// timeout(() => {
-//   console.log('Done!');
-// });
-function timeout(cb) {
-  setTimeout(function () { {
-    console.log('hello!')
-    cb();
-  }, 3000);
-}
-};
-
-timeout(() => {
-  console.log('Done!');
-});
+console.log(typeof 'hello world');
+console.log(typeof 123);
+console.log(typeof true);
+console.log(typeof undefined);
+console.log(typeof null);
+console.log(typeof {});
+console.log(typeof []);
 
 
-// function timeout(cb) {
-//   setTimeout(function() {
-//     console.log('hello');
-//     cb();
-//   }, 3000);
-// };
 
-// timeout(function() {
-//   console.log(Done!);
-// });
+console.log(getType(123));
+console.log(getType(false));
+console.log(getType('hi'));
+console.log(getType({}));
+console.log(getType([]));
+console.log(getType(null));
