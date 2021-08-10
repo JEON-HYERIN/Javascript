@@ -1,76 +1,55 @@
-// JS 데이터
+import random from './getRandom.js';
 
-String: "", '', ``
-Number
-Boolean: true, false
-undefined
-null
-Array: []
-Object: {}
+const pi = 3.141592
+console.log(pi) //3.141592, 숫자데이터
 
-
-String.prototype.indexOf()
-// indexOf() 메서드는 호출한 String 객체에서 주어진 값과 일치하는 첫 번째 인덱스를 반환합니다. 일치하는 값이 없으면 -1을 반환합니다.
-//  인덱스 = 숫자
-// zero based 기준
-// prototype을 통해 지정한 메소드는 메모리에 딱 한번만 만들어지고
-// 그것을 이앞 에있는 생성자가 new라는 키워드로 만들어내는 인스턴스에서 언제든지 활용가능
+// toFixed()는 숫자데이터에 사용할 수 있는 메소드
+// 메소드가 호출될 때 인수로 소수점의 몇번째 자리까지 유지할 것인지 명시
+// toFixed 메소드가 실행되면 문자데이터가 반환됨
+const str = pi.toFixed(2)
+console.log(str) //3.14
+console.log(typeof str) //string
 
 
-// const result = 'Hello world!'.indexOf('world')
-// // console.log(result) //6
-// // const result = 'Hello world!'.indexOf('hyerin')
-// // console.log(result) //-1
-// // -1이라는 숫자데이터가나오면 문자데이터내부에서 hyerin이라는 문자를 전혀 찾을 수 없음을 의미
-
-// // new String()이라는 생성자 함수 대신 따옴표를 통해서 리터럴방식으로
-// // 하나의 데이터를 만든것임으로 String객체의 prototype으로 지정된 메소드는 
-// // 언제 어디서나 문자데이터의 뒤쪽에 붙여서 활용가능
-
-// const str = '0123'
-
-// console.log(str.length) //4
-// length속성 :str이라는 변수는 하나의 문자데이터고 그 문자데이터안에들어있는 글자가 총 몇개인지
-// console.log('0123'.length) //4
-// 특정한 문자데이터를 변수에 담지 않고 바로 직접적으로 사용가능
-// length 문자데이터의 글자개수 확인시 사용
-// 띄어쓰기도 하나의 공백문자
+// parseInt, parseFloat는 자바스크립트에서 제공하는 숫자와 관련된 전역함수(global, 전체의 영역에서 언제든지 사용할 수 있는 함수)
+// setTimeout, setInterval, clearTimeout, clearInterval 도 전역함수
+// parse:분석하다 int: integer라는 정수를 의미하는 단어의 약어 
+// parseInt 전역함수 부분의 인수로 문자데이터를 넣게되면 분석 후 숫자만 추출해서 정수로 반환
+// parseFloat 전역함수: 소수점자리의 숫자도 유지하면서 문자데이터를 숫자데이터로 변환
+const integer = parseInt(str) 
+const float = parseFloat(str)
+console.log(integer) //3
+console.log(float) //3.14
+console.log(typeof integer, typeof float) //number, number
 
 
-// const str = 'Hello world!'
+// Math는 수학적인 상수와 함수를 위한 속성과 메서드를 가진 내장 객체입니다. 함수 객체가 아닙니다.
 
-// console.log(str.indexOf('world')) //6
-// console.log(str.indexOf('hyerin')) //-1
-// console.log(str.indexOf('hyerin') !== -1) //false
-// indexof와 비교연산자를 사용하게 되면 해당문자가 있는지 없는지 불린데이터로 확인가능
+// Math.abs(): Math.abs() 함수는 주어진 숫자의 절대값을 반환합니다. x가 양수이거나 0이라면 x를 리턴하고, x가 음수라면 x의 반대값, 즉 양수를 반환합니다.
+console.log('abs: ', Math.abs(-12)) //abs: 12
 
-// console.log(str.slice(0, 3)) //Hel
-// slice: 어디에서시작해서 몇번째의 직전까지 잘라낼것인지 의미
-// slice() 메소드는 문자열의 일부를 추출하면서 새로운 문자열을 반환합니다.
-// beginIndex 추출 시작점인 0부터 시작하는 인덱스입니다.
-// endIndex 0부터 시작하는 추출 종료점 인덱스로 그 직전까지 추출됩니다.
+// Math.min(): Math.min() 함수는 주어진 숫자들 중 가장 작은 값을 반환합니다.
+console.log('min: ', Math.min(2, 8)) //min: 2
 
-// console.log(str.slice(6, 11)) //world만 출력
+// Math.max(): Math.max()함수는 입력값으로 받은 0개 이상의 숫자 중 가장 큰 숫자를 반환합니다.
+console.log('max: ', Math.max(2, 8)) //max: 8
 
+// Math.ceil(): 정수단위로 올림 처리 
+// Math.ceil() 함수는 주어진 숫자보다 크거나 같은 숫자 중 가장 작은 숫자를 integer 로 반환합니다.
+console.log('ceil: ', Math.ceil(3.14)) //ceil: 4
 
-// console.log(str.replace('world', 'hyerin')) //Hello hyerin!
-// replace메소드: 앞에있는 문자데이터에서 첫번째 인수에 해당하는 그 문자를 찾아서
-// 두번째 인수에 해당하는 내용으로 교체
+// Math.floor(): 정수단위로 내림 처리
+//  Math.floor() 함수는 주어진 숫자와 같거나 작은 정수 중에서 가장 큰 수를 반환합니다.
+console.log('floor: ', Math.floor(3.14)) //floor: 3
 
-// console.log(str.replace(' world!', '')) //Hello
-// hello만 남기고싶을때 replace활용
-// 대체할 문자를 '' 빈문자로 작성
+// Math.round(): 정수기준으로 반올림처리  
+// Math.round() 함수는 입력값을 반올림한 수와 가장 가까운 정수 값을 반환합니다.
+console.log('round: ', Math.round(3.14)) //round: 3
 
-// const str = '         Hello world         '
-// console.log(str) //         Hello world         
-// console.log(str.trim()) //Hello world
-// trim메소드: 특정한 문자 데이터의 앞에서 시작하는 연결된 모든 공백문자들을 제거하고
-// 맨뒤에서 연결되어져있는 모든 공백문자들을 제거
+// Math.random(): 랜덤한 숫자를 반환 (난수)
+// Math.random() 함수는 0 이상 1 미만의 구간에서 근사적으로 균일한(approximately uniform) 부동소숫점 의사난수를 반환하며, 이 값은 사용자가 원하는 범위로 변형할 수 있다. 난수 생성 알고리즘에 사용되는 초기값은 구현체가 선택하며, 사용자가 선택하거나 초기화할 수 없다
+console.log('random: ', Math.random() ) //random:  0.10729888790363962
 
 
 
-let result = 'Hello world!'.indexOf('world')
-console.log(result) //6
-
-result = 'Hello world!'.indexOf('hyerin')
-console.log(result) //-1
+console.log(random())
