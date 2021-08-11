@@ -1,100 +1,91 @@
-// const numbers = [1, 2, 3, 4]
-// const fruits = ['Apple', 'Banana', 'Cherry']
-// 0번째, 1번째, 2번째에 해당하는 숫자를 index(인덱스)라 부름
-// index: 배열데이터 내부에 들어있는 특정한 데이터의 위치를 가르키는 숫자
-// indexing(인덱싱): 인덱스에 숫자를 넣어서 조회하는 것
-// element(요소): 인덱싱을 통해 조회할 수 있는 배열데이터 내부에 들어있는 각각의 데이터를 의미
-// element를 배열의 item이라고도 부름 
-// console.log(numbers[1])
-// console.log(fruits[2]) 
-
-
-// Array.prototype.find()
-
-
-// Array.prototype.length
-// 배열데이터를 대괄호라는 기호를 이용하여 리터럴방식의 데이터부분에 뒤쪽에 length 속성 사용 [].length
-// .length
-// 배열의 길이가 얼마인가(배열안의 아이템의 갯수가 몇개인가)
+// .filter()
+// Array.prototype.filter()
+// filter() 메서드는 주어진 함수의 테스트를 통과하는 모든 요소를 모아 새로운 배열
+// 어떠한 배열데이터안에 들어있는 각각의 아이템들을 특정한 기준에 의해서 필터링을 함
+// 필터된 새로운 배열데이터를 결과로 반환
+// 콜백함수에서 반환되는 값이 true인 경우에만 numbers 부분에서 반복되는 그 아이템의 데이터를 새로운 배열에 하나씩 넣어줌
+// 필터는 필터링을해서 일부내용을 걷어내고 새로운 배열을 만드는 개념
+// 만들어진 새로운 배열이 원본의 개수랑 다를 수 있음
+// 원본에 영향을 주지 않음
 // const numbers = [1, 2, 3, 4]
 // const fruits = ['Apple', 'Banana', 'Cherry']
 
-// console.log(numbers.length)
-// console.log(fruits.length)
-// console.log([1, 2].length)
+// const a = numbers.map(number => number < 3)
+// console.log('a: ', a)
 
-// console.log([].length) //빈 배열, 빈배열의 아이템의갯수 0
+// const b = numbers.filter(number => number < 3)
+// console.log('b: ', b)
 
+// console.log(numbers)
 
-//  .concat()
-// concat메소드: 2개의 배열데이터를 병합해서 새로운 배열데이터를 반환
-// concat메소드 사용시 원본의 데이터는 손상되지 않음(수정되지 않음)
-// 원본의 배열데이터에는 전혀 영향을 주지 않음
+// .find() .findIndex()
+// findIndex: 찾아진 아이템의 인덱스 번호를 반환하는 메소드
 // const numbers = [1, 2, 3, 4]
 // const fruits = ['Apple', 'Banana', 'Cherry']
 
-// console.log(numbers.concat(fruits)) //(7) [1, 2, 3, 4, "Apple", "Banana", "Cherry"]
-// console.log(numbers) //(4) [1, 2, 3, 4]
-// console.log(fruits) //(3) ["Apple", "Banana", "Cherry"]
+// const a = fruits.find(fruit => /^C/.test(fruit)) //C로시작하는
+// console.log(a) //Cherry
 
-// .forEach()
-// forEach메소드는 그 메소드가 붙어있는 배열데이터의 item 갯수만큼 인수로 사용된 콜백함수가 반복적으로 실행됨
-// array매개변수: array는 콜백에해당하는 forEach라는 메소드가 붙어있는 그 배열데이터를 지칭(즉 fruits라는 배열데이터를 지칭)
-// 매개변수이름은 이해할 수 있는 수준에서 자유롭게 작성
-// forEach메소드는 배열데이터의 아이템 갯수만큼 특정한 콜백함수를 반복적으로 실행하는 용도로 사용
-// forEach메소드는 아이템의 갯수만큼 콜백함수를 반복하는데 따로 반환되는 값은 없음
+// const b = fruits.findIndex(fruit => /^C/.test(fruit))
+// console.log(b) //2
 
+
+// .includes()
+// 앞에있는 배열데이터 부분에 인수로 사용된 특정한 데이터가 포함되어 있는지 확인 해주는 메소드
 // const numbers = [1, 2, 3, 4]
 // const fruits = ['Apple', 'Banana', 'Cherry']
 
-// fruits.forEach(function (element, index, array) {
-//   console.log(element, index, array)
-// })
+// const a = numbers.includes(3)
+// console.log(a) //true
 
-// fruits.forEach(function (item, i) {
-//   console.log(item, i)
-// })
+// const b = fruits.includes('hyerin')
+// console.log(b) //false
 
-// fruits.forEach(function (fruit, i) {
-//   console.log(fruit, i)
-// })
 
-// .map()
-// map메소드는 그 내부에 콜백에서 반환된 특정한 데이터를 기준으로 해서
-// 그 데이터들의 모음인 새로운 배열을 이 메소드가 실행된 자리에서 반환
-// map메소드는 인수로 사용하는 콜백에 내부에서 반환하는 하나의 데이터를 가지고 그 데이터들을 모아놓은
-// 새로운 배열을 만들어서 반환
-// map메소드는 아이템의 갯수만큼 콜백함수를 반복하는데 콜백내부에서 return 키워드를 통해서 반환한 데이터를 새로운 배열로 만들어서 사용
+// push() .unshift()
+// 원본 수정됨 주의
+// push(): 메소드가 사용되는 그배열의 가장 뒤쪽 부분에 특정한 인수의 내용을 밀어넣음
+// unshift(): 배열데이터의 가장 앞쪽에 데이터를 삽입하는 구조
+// const numbers = [1, 2, 3, 4]
+// const fruits = ['Apple', 'Banana', 'Cherry']
+
+// numbers.push(5)
+// console.log(numbers) //(5) [1, 2, 3, 4, 5]
+
+// numbers.unshift(0)
+// console.log(numbers) //(6) [0, 1, 2, 3, 4, 5]
+
+
+// // .reverse()
+// // 원본 수정됨 주의
+// // 배열의 아이템의 순서를 완전히 뒤집어내는 용도로 사용
+// const numbers = [1, 2, 3, 4]
+// const fruits = ['Apple', 'Banana', 'Cherry']
+
+// numbers.reverse()
+// fruits.reverse()
+
+// console.log(numbers) //(4) [4, 3, 2, 1]
+// console.log(fruits) //(3) ["Cherry", "Banana", "Apple"]
+
+
+// .splice()
+// 원본 수정됨 주의
+// splice() 메서드는 배열의 기존 요소를 삭제 또는 교체하거나 새 요소를 추가하여 배열의 내용을 변경합니다.
+// 첫번째인수: 배열데이터의 인덱스값
+// 두번째인수: 인덱스 번호에서 아이템 1개 지우기 
+// 세번째인수: 인덱스번호에 해당 아이템을 끼워 넣기
 const numbers = [1, 2, 3, 4]
 const fruits = ['Apple', 'Banana', 'Cherry']
 
-const a = fruits.forEach(function (fruit, index) {
-  console.log(`${fruit}-${index}`)
-})
-console.log(a) //undefined
+numbers.splice(2, 1) 
+console.log(numbers) //(3) [1, 2, 4]
 
-// const a = fruits.forEach((fruit, index) => {
-//   console.log(`${fruit}-${index}`)
-// })
-// console.log(a)
+numbers.splice(2, 0, 999) 
+console.log(numbers) //(4) [1, 2, 999, 4]
 
-// const b = fruits.map(function (fruit, index) {
-//   // return `${fruit}-${index}` //return 키워드를 이용하여 콜백함수 밖으로 반환
-//   return {
-//     id: index,
-//     name: fruit 
-//   }
-// })
+numbers.splice(2, 1, 99) 
+console.log(numbers) //(4) [1, 2, 99, 4]
 
-// const b = fruits.map(function (fruit, index) {
-//   return `${fruit}-${index}` //return 키워드를 이용하여 콜백함수 밖으로 반환
-// })
-
-const b = fruits.map((fruit, index) => ({
-    id: index,
-    name: fruit 
-}))
-console.log(b) //(3) ["Apple-0", "Banana-1", "Cherry-2"]
-// 0: {id: 0, name: "Apple"}
-// 1: {id: 1, name: "Banana"}
-// 2: {id: 2, name: "Cherry"}
+fruits.splice(2, 0, 'Orange')
+console.log(fruits) //(4) ["Apple", "Banana", "Orange", "Cherry"]
