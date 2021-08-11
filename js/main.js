@@ -1,91 +1,80 @@
-// .filter()
-// Array.prototype.filter()
-// filter() 메서드는 주어진 함수의 테스트를 통과하는 모든 요소를 모아 새로운 배열
-// 어떠한 배열데이터안에 들어있는 각각의 아이템들을 특정한 기준에 의해서 필터링을 함
-// 필터된 새로운 배열데이터를 결과로 반환
-// 콜백함수에서 반환되는 값이 true인 경우에만 numbers 부분에서 반복되는 그 아이템의 데이터를 새로운 배열에 하나씩 넣어줌
-// 필터는 필터링을해서 일부내용을 걷어내고 새로운 배열을 만드는 개념
-// 만들어진 새로운 배열이 원본의 개수랑 다를 수 있음
-// 원본에 영향을 주지 않음
-// const numbers = [1, 2, 3, 4]
-// const fruits = ['Apple', 'Banana', 'Cherry']
-
-// const a = numbers.map(number => number < 3)
-// console.log('a: ', a)
-
-// const b = numbers.filter(number => number < 3)
-// console.log('b: ', b)
-
-// console.log(numbers)
-
-// .find() .findIndex()
-// findIndex: 찾아진 아이템의 인덱스 번호를 반환하는 메소드
-// const numbers = [1, 2, 3, 4]
-// const fruits = ['Apple', 'Banana', 'Cherry']
-
-// const a = fruits.find(fruit => /^C/.test(fruit)) //C로시작하는
-// console.log(a) //Cherry
-
-// const b = fruits.findIndex(fruit => /^C/.test(fruit))
-// console.log(b) //2
+// prototype 속성이 붙어있지 않는 메소드 : 정적(static)메소드
+// {}.assign() 중괄호를 사용하는 객체 리터럴부분에 메소드를 직접적으로 사용불가
 
 
-// .includes()
-// 앞에있는 배열데이터 부분에 인수로 사용된 특정한 데이터가 포함되어 있는지 확인 해주는 메소드
-// const numbers = [1, 2, 3, 4]
-// const fruits = ['Apple', 'Banana', 'Cherry']
+// Object.assign()
+// 1번째 인수로 들어가져있는 타켓이라는 객체에 2번째에 인수로 들어가는 객체 병합해서 병합된 타겟의 객체를 반환
+// 객체데이터에서 속성의 이름은 고유해야됨
 
-// const a = numbers.includes(3)
-// console.log(a) //true
+const userAge = {
+  // Key: value
+  name: 'hyerin',
+  age: 85
+}
 
-// const b = fruits.includes('hyerin')
-// console.log(b) //false
+const userEmail = {
+  name: 'hyerin',
+  email: 'abcde123@gmail.com'
+}
 
-
-// push() .unshift()
-// 원본 수정됨 주의
-// push(): 메소드가 사용되는 그배열의 가장 뒤쪽 부분에 특정한 인수의 내용을 밀어넣음
-// unshift(): 배열데이터의 가장 앞쪽에 데이터를 삽입하는 구조
-// const numbers = [1, 2, 3, 4]
-// const fruits = ['Apple', 'Banana', 'Cherry']
-
-// numbers.push(5)
-// console.log(numbers) //(5) [1, 2, 3, 4, 5]
-
-// numbers.unshift(0)
-// console.log(numbers) //(6) [0, 1, 2, 3, 4, 5]
-
-
-// // .reverse()
-// // 원본 수정됨 주의
-// // 배열의 아이템의 순서를 완전히 뒤집어내는 용도로 사용
-// const numbers = [1, 2, 3, 4]
-// const fruits = ['Apple', 'Banana', 'Cherry']
-
-// numbers.reverse()
-// fruits.reverse()
-
-// console.log(numbers) //(4) [4, 3, 2, 1]
-// console.log(fruits) //(3) ["Cherry", "Banana", "Apple"]
+// userEmail.assign, userAge.assign 직접적으로 사용불가
+// assign메소드는 Object라는 자바스크립트 전역객체부분의 prototype으로 만들어진 메소드가 아님
+// = 정적메소드: Object라는 자바스크립트 전역객체에 직접적으로 사용
+// target부분에 source부분의 속성들을 복사해서 집어넣음
+// const target = Object.assign(userAge, userEmail) //첫번째인수userAge:대상객체, 두번째인수userEmail:출처객체
+// console.log(target) //{name: "hyerin", age: 85, email: "abcde123@gmail.com"}
+// console.log(userAge) //{name: "hyerin", age: 85, email: "abcde123@gmail.com"}
+// console.log(target === userAge) //true
+// target과 userAge는 같은 데이터, 출처객체source에서 대상객체target으로 속성의 값을 복사해서 집어넣는데 그 객체가 반환됨
 
 
-// .splice()
-// 원본 수정됨 주의
-// splice() 메서드는 배열의 기존 요소를 삭제 또는 교체하거나 새 요소를 추가하여 배열의 내용을 변경합니다.
-// 첫번째인수: 배열데이터의 인덱스값
-// 두번째인수: 인덱스 번호에서 아이템 1개 지우기 
-// 세번째인수: 인덱스번호에 해당 아이템을 끼워 넣기
-const numbers = [1, 2, 3, 4]
-const fruits = ['Apple', 'Banana', 'Cherry']
+// 생긴게 똑같다고 일치연산자로 같다고 나온게 아님
+// 두개의 객체는 생긴것은 똑같지만 서로 다른 객체임
+// 하나의 객체데이터는 특정한 메모리주소에 값이 들어가져있음
+// a와 b 변수는 서로 다른 메모리주소를 바라보고있으므로 같지않음
+// const a = { k: 123 }
+// const b = { k: 123 }
+// console.log(a === b) //false
 
-numbers.splice(2, 1) 
-console.log(numbers) //(3) [1, 2, 4]
+원본데이터는 손상하지 않고 그것의 속성들을 합쳐놓은 새로운 객체데이터를 만들어서
+반환시켜 사용가능
+userAge, userEmail을 합쳐 새로운 객체데이터 만드는방법
+const target = Object.assign({}, userAge, userEmail) //userAge, userEmail:출처객체
+console.log(target) //{name: "hyerin", age: 85, email: "abcde123@gmail.com"}
+console.log(userAge) //{name: "hyerin", age: 85}
+console.log(target === userAge) //false
 
-numbers.splice(2, 0, 999) 
-console.log(numbers) //(4) [1, 2, 999, 4]
 
-numbers.splice(2, 1, 99) 
-console.log(numbers) //(4) [1, 2, 99, 4]
+userAge원본데이터를 손상하지 않고 그것을 새로운 객체데이터로 속성을 옮겨서 하나의 복사본을 만듦
+내용은 같지만 userAge 바라보고있는 메모리주소가 따로 있고 그것이 복사돼서 새로운 메모리주소로 할당되었으므로 서로 다름
+const target = Object.assign({}, userAge) 
+console.log(target) //{name: "hyerin", age: 85}
+console.log(userAge) //{name: "hyerin", age: 85}
+console.log(target === userAge) //false
 
-fruits.splice(2, 0, 'Orange')
-console.log(fruits) //(4) ["Apple", "Banana", "Orange", "Cherry"]
+
+//Object.keys()
+// Object.keys() 메소드는 주어진 객체의 속성 이름들을 일반적인 반복문과 동일한 순서로 순회되는 열거할 수 있는 배열로 반환합니다.
+// name,age,email이라는 key가 Object.keys의 정적메소드를 통해 그 key들만 추출되어 새로운 배열데이터로 만들어짐
+// 속성이름만 추출해서 새로운 배열로 만들어주는 개념
+// const user = {
+//   // Key: value
+//   name: 'hyerin',
+//   age: 85,
+//   email: 'abcde123@gmail.com'
+// }
+
+// const keys = Object.keys(user)
+// console.log(keys) //(3) ["name", "age", "email"]
+
+// 객체데이터에서 사용할 수 있는 인덱싱방법
+// 인덱싱: 객체데이터뒤쪽에 대괄호를열고닫아 객체데이터가 가지고있는 속성이름명시(번호x)
+// user부분의 email property 값을 내놔라
+// console.log(user['email']) //abcde123@gmail.com
+// console.log(user.email) //abcde123@gmail.com
+
+// user라는 객체에서 name부분의 속성값을 가져옴
+// map메소드 콜백에서반환된 특정한데이터를 차곡차곡 배열로만들어서 반환
+// user라는 부분의 key부분의 값들을 추출해서 배열로 만들어 반환
+// const values = keys.map(key => user[key])
+console.log(values) //(3) ["hyerin", 85, "abcde123@gmail.com"]
