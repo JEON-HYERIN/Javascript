@@ -1,80 +1,121 @@
-// 데이터 불변성(Immutability)
-// 원시 데이터: String, Number, Boolean, undefined, null
-// 참조형 데이터: Object, Array, Function
-// --------------------------------------------------------------------
-// |1:           |2:           |3:           |4:                      
-// --------------------------------------------------------------------
+
+얕은 복사(Shallow copy), 깊은 복사(Deep copy)
+// const user = {
+//   name: 'hyerin',
+//   age: 95,
+//   emails: ['abcde@gmail.com']
+// }
+// const copyUser = user
+// console.log(copyUser === user) //true
+
+
+// user라는 변수와 copyUser변수가 바라보고 있는 메모리주소가 같기 때문에 한쪽에서 수정을해도 다른쪽에도 영향을받음
+// copyUser를 수정해도 user부분의 값도 변경될 것임
+// 의도하지않았는데 이러한 현상이 발생한다면 의도치않게 엉뚱한 부분이 수정될 수 있음
+// user.age = 22
+// console.log('user', user) //user {name: "hyerin", age: 22, emails: Array(1)}
+// console.log('copyUser',copyUser) //copyUser {name: "hyerin", age: 22, emails: Array(1)}
+
+// console.log('-----')
+// console.log('-----')
+
+// ***얕은복사***
+
+// const user = {
+//   name: 'hyerin',
+//   age: 95,
+//   emails: ['abcde@gmail.com']
+// }
+
+// 첫번째 인수:대상객체, 두번째 인수:출처객체 대상객체에 출처객체가 가지고있는 여러가지 속성들을 담아서 그것을 실행해서 반환
+// 새로운 객체데이터가 새로운 메모리주소에 할당됨
+// const copyUser = Object.assign({}, user)
+// console.log(copyUser === user) //false
+// //false: user가 가지고있는 속성과 값들을 복사해서 집어넣었기 때문에 겉표면의 객체데이터는 1번메모리주소, 2번메모리주소로 다름
+
+// // age부분은 22로갱신, user부분을 수정한것이 copyUser에는 영향을 미치지않음
+// user.age = 22
+// console.log('user', user) //user {name: "hyerin", age: 22, emails: Array(1)}
+// console.log('copyUser',copyUser) //copyUser {name: "hyerin", age: 95, emails: Array(1)}
 
 
 
-// 원시데이터: 한번 메모리에 만들어지면 새롭게 만들어지는것이 아닌 항상 불변한다는 개념.
-// 새로운 원시데이터를 사용했을때 기존의 메모리주소에 들어있다면 그 원시데이터를 새로운 메모리에 새롭게 만드는것 아닌 기존에 존재하는 메모리주소를 바라보게 만듦
-// 원시데이터는 데이터 자체가 변하지 않는 성질을 가짐 따라서 원시형데이터는 생긴것이 다르면 다르다고 쉽게 이해해도 됨
+// 다른방법)전개연산자를 통해서 복사하는방법
+// 하나의 빈객체데이터 내부에 user라는 객체데이터가 가지고있는 속성과 값들을 전개해서 집어넣게됨
+// const copyUser = {...user}
+// console.log(copyUser === user) //false
+// // 새로운메모리주소로할당됐기에 false
+
+// user.age = 22
+// console.log('user', user) //user {name: "hyerin", age: 22, emails: Array(1)}
+// console.log('copyUser',copyUser) //copyUser {name: "hyerin", age: 95, emails: Array(1)}
 
 
-// a는 첫번째 메모리주소, b는 두번째 메모리주소를 바라보는 형태로 사용됨
-let a = 1
-let b = 4
-console.log(a, b, a === b) //1 4 false
-// false: 변수a가 바라보는 메모리주소와 변수b가 바라보는 메모리 주소가 서로 다르기 때문에 일치하지 않다고 판단
+// ***깊은복사***
+// const user = {
+//   name: 'hyerin',
+//   age: 95,
+//   emails: ['abcde@gmail.com']
+// }
 
-// b라는변수에 a를 할당한다는 것은 a가 바라보는 첫번째 메모리주소를 b에게 할당한다는 의미
-// 따라서 b는 두번째 메모리주소를 바라보지 않고 첫번째 메모리주소를 바라봄
-b = a
-console.log(a, b, a === b) //1 1 true
-//true: a와 b가 바라보고있는 메모리주소가 같기 때문에 일치한다고 판단
-
-// 7이라는 숫자데이터는 새로운데이터 따라서 숫자데이터 7은 세번째 메모리주소에 들어감
-// a는 1번메모리에서 3번메모리주소를 바라보는 구조로 바뀜
-a = 7
-console.log(a, b, a === b) //7 1 false
-// false: 서로 바라보고있는 메모리 위치가 다르기 때문에 false 값이 나옴
-// 쉽게말해 서로 숫자값이 다르니까 false
-
-// c에 할당된 숫자데이터 1은 기존에 메모리에있는 숫자데이터 1을 바라봄
-// 네번째 메모리주소로 들어가지 않음!!
-let c = 1
-console.log(b, c, b === c) //1 1 true
-// true: b와 c 모두 1번 메모리주소를 바라보고 있으므로 true
+// const copyUser = {...user}
+// console.log(copyUser === user) //false
 
 
-// 참조형 데이터
-// 생긴것이 같아도 서로 같은 데이터가 아닐 수도 있음
-// 참조형데이터는 원시형데이터와 다르게 새로운 값을 만들때마다 그것이 새로운 메모리주소로 할당되는 구조를 가짐
-// 참조형 데이터는 불변성이없음, 다른말로 가변한다고 표현
+// user.age = 22
+// console.log('user', user) //{name: "hyerin", age: 22, emails: Array(1)}
 
-let a = { k: 1 }
-let b = { k: 1 }
-console.log(a, b, a === b) //{k: 1} {k: 1} false
-// 일치 연산자로 비교시 false a와 b라는 변수가 서로 다른 메모리 주소를 바라보고 있다는 것을 확인하는 것
-// a라는 변수는 1번메모리를 바라보고 b는 두번째메모리주소를 바라봄
-// a와 b는 바라보고있는 메모리주소가 서로 다르기 때문에 일치연산자로 비교시 false라는 값이 나옴
-
-// 1번째 메모리주소에서 k:1 -> k:7로 값이 수정됨
-a.k = 7
-
-// b가바라보고있던 2번메모리주소가 1번메모리주소를 바라보도록 바뀜
-b = a
-console.log(a, b, a === b) //{k: 7} {k: 7} true
-// true: 서로 1번메모리주소를 바라보고 있기 때문
-
-// 1번메모리에있던 k부분이 7->2로 값이 바뀜
-// a,b 변수 모두 1번메모리를 바라보고 있기 때문에 같은 값이 나옴
-// 같은메모리를 바라보고있는 여러개의 변수들이 있을때 한쪽 변수에 있는 값을 수정하게되면 다른값에서 확인하게 될때 의도하지 않게 이미 값이 바뀌어 있음
-// 즉, a라는 변수에서 k속성 값만 바꾸었지만 의도하지 않게 b라는 변수의 k 속성 값도 같이 바뀜(왜냐하면 서로 같은 메모리 주소를 바라보고 있기에)
-a.k = 2
-console.log(a, b, a === b) //{k: 2} {k: 2} true
-
-// c라는 변수에 b라는 변수를 할당
-// 현재 a,b 모두 1번메모리주소를 바라보고 있기때문에 b를 c에 할당했기 때문에 c도 1번메모리주소를 바라보게됨
-let c = b
-console.log(a, b, c, a === c) //{k: 2} {k: 2} {k: 2} true
-// true: 같은 메모리주소를 바라보고있기 때문에 참
-
-// a가 바라보고있던 메모리주소의 k를 2->9로 바꿈
-// b,c도 1번메모리주소를 동시에 바라보고 있기 때문에 수정한것은 a변수의 k속성이지만 a,b,c모두 k부분이 숫자9로바뀜
-a.k = 9
-console.log(a, b, c, a === c) //{k: 9} {k: 9} {k: 9} true
+// console.log('copyUser',copyUser) //{name: "hyerin", age: 95, emails: Array(1)}
 
 
-// 참조형데이터는 할당연산자를 사용했을때 복사돼서 새로운 객체데이터가  만들어지는 개념이 아니라 메모리의 참조주소만 옮겨감(메모리주소만 같은곳을 바라보게 만들어줌)
+
+// 배열데이터의 가장 뒷부분에 새로운 아이템으로 push부분의 인수를 집어넣음
+// emails는 배열데이터 즉,참조형데이터 우리가 복사처리한것은 user라는 객체데이터, 결국 user안에 들어있는 새로운 참조형데이터인 emails라는 배열데이터는 따로 복사된것이아닌 같은메모리주소를 공유중이므로 일치연산자 true
+// age부분의 숫자는 다르긴하지만 참조형데이터인 emails의 배열은 같은 메모리주소를 공유하는상태
+// user.emails.push('xyz@naver.com')
+// console.log(user.emails === copyUser.emails) //true
+// console.log('user', user) //{name: "hyerin", age: 22, emails: Array(2)}
+// //emails: (2) ["abcde@gmail.com", "xyz@naver.com"]
+// console.log('copyUser',copyUser) //{name: "hyerin", age: 95, emails: Array(2)}
+// // emails: (2) ["abcde@gmail.com", "xyz@naver.com"]
+
+// const user = {
+//   name: 'hyerin',
+//   age: 95,
+//   emails: ['abcde@gmail.com']
+// }
+
+깊은복사, clone:복제 deep:깊은 깊은복제를만들어서 이메소드에서 반환이되면 copyUser로 받아서활용
+참조형데이터 내부에 또다른 참조형데이터가 있다면 얕은복사보다는 깊은복사를 통해서 복사하는 것이 안전
+lodash라는 패키지의 도움을받아 cloneDeep이라는 메소드사용
+const copyUser = _.cloneDeep(user)
+console.log(copyUser === user) //false
+
+user.age = 22
+console.log('user', user) //{name: "hyerin", age: 22, emails: Array(1)}
+
+console.log('copyUser',copyUser) //{name: "hyerin", age: 95, emails: Array(1)}
+user.emails.push('xyz@naver.com')
+console.log(user.emails === copyUser.emails) //false
+console.log('user', user) //{name: "hyerin", age: 22, emails: Array(2)}
+// emails: (2) ["abcde@gmail.com", "xyz@naver.com"]
+console.log('copyUser',copyUser) //{name: "hyerin", age: 95, emails: Array(1)}
+
+
+
+
+
+
+객체데이터, 배열데이터 같은 참조형 데이터를 복사할 때, 얕은복사로도 충분히 문제없이 복사가 된다고 판단한다면 Object.assign이나 전개연산자를 통해 해당하는 참조형데이터를 복사
+
+재귀:하나의 데이터안에서 어떠한내용이 계속 반복적으로 실행 즉,반복실행
+반복실행하면서 모든 값들을 복제하므로 깊은복사가 가능
+그내부에서 지속적으로 반복처리를함
+
+objects의 배열데이터라는 껍데기만 복사하는것이 아니라 그 내부에 들어있는 새로운 참조형데이터인 객체데이터까지 꼼꼼하게 복사해서 새로운 메모리로 할당했기에 그 내부에 있는값을 비교해도 일치연산자에서 false값이 나옴
+
+
+정리
+대표적인 참조형데이터: 객체, 배열데이터 복사할 때에는 그 내부에 또다른 참조형 데이터가 없다는 전제하에서는 손쉽게 얕은복사사용
+특정참조데이터 내부에 또다른 참조데이터가있다면 깊은복사를 고려해야함
+깊은복사 lodash의 cloneDeep기능의 도움을 받아개발추천
