@@ -1,68 +1,57 @@
-// _.uniq : 배열데이터 안에 들어있는 중복되는 값들을 고유하게 바꿔줌
-//  _.uniq메소드 사용시 손쉽게 중복되는 내용들을 제거해서 새로운 배열을 만들어 낼 수 있음
+// JSON(JavaScript Object Notation)
+// json : 자바스크립트의 데이터를 표현하는 하나의 포맷
+// 서버와의 통신에서 데이터를 주고받는 하나의 포맷으로 사용
+// json포맷에서 사용할 수 있는 자료형 - undefined 제외하고 나머지 사용
+// 문자열(String): ""큰따옴표만 허용
+// json문법은 속성의 이름을 따옴표로 묶어줘야함
+
+// const user = {
+//   name: 'hyerin',
+//   age': 95,
+//   emails': [
+//     'abcd@gmail.com',
+//     'xyz@naver.com'
+//   ]
+// }
+
+// 자바스크립트 객체 표기법
+// 자바스크립트의 객체데이터는 속성부분에 따옴표로 묶어서 작성해도 무방
+// 자바스크립트파일 안에서는 따옴표를 안붙여도됨
+// but, company-name 같이 속성이름에 특수기호있으면 붙여야함
+// 특수기호는 객체데이터의 속성으로 해석이 안됨
+
+// import myData from '../myData.json'
+// json이라는 확장자를 가지고 있는 파일은 사실 하나의 문자데이터, json이라는 파일은 하나의 문자데이터
+// console.log(myData)
+
+const user = {
+  'name': 'hyerin',
+  'age': 95,
+  'emails': [
+    'abcd@gmail.com',
+    'xyz@naver.com'
+  ]
+}
+console.log('user', user) //user {name: "hyerin", age: 95, emails: Array(2)}
+
+// JSON: 자바스크립트 전체의 영역에서 사용할 수 있는 하나의 전역 객체
+
+// stringify: 자바스크립트 파일 내부에서 어떤 특정 데이터를 JSON의 형태로, 즉 JSON의 포맷으로 문자데이터화시켜주는 메소드 
+// 인수부분에 객체데이터뿐만아니라 JAVASCRIPT 파일에서 사용할 수 있는 모든데이터를 stringify의 인수로 사용해서 JSON포맷으로(문자데이터로) 만들어서 활용할 수 있음
+const str = JSON.stringify(user)
+console.log('str', str) //str {"name":"hyerin","age":95,"emails":["abcd@gmail.com","xyz@naver.com"]}
+
+// 속성부분이 큰따옴표로 묶여있음
+// JSON이라는 포맷은 하나의 문자데이터로만 관리됨
+console.log(typeof str) //string
+
+// 그렇게 만들어진 문자데이터를 JSON이라는 전역객체에 PARSE메소드에 인수로 넣어서 분석해서 자바스크립트에서 활용할 수 있는 하나의 데이터로 재조립
+// 문자데이터를 JSON.PARSE를 이용해서 다시 자바스크립트의 실제데이터로 변경
+const obj = JSON.parse(str)
+console.log('obj', obj) //obj {name: "hyerin", age: 95, emails: Array(2)}
+// 실제객체데이터처럼출력
 
 
-// const usersA = [ 
-//   {userId: '1', name: 'hyerin'},
-//   {userId: '2', name: 'Neo'}
-// ]
 
-// const usersB = [ 
-//   {userId: '1', name: 'hyerin'},
-//   {userId: '3', name: 'Amy'}
-// ]
-
-// concat메소드: 2개의 배열데이터를 병합해서 새로운 배열데이터를 반환
-// 단순하게 합쳐버리는 concat메소드를 사용하면 중복되는 데이터 발생
-// const usersC = usersA.concat(usersB)
-
-// console.log('concat', usersC) //concat (4) [{…}, {…}, {…}, {…}]
-// 0: {userId: "1", name: "hyerin"}
-// 1: {userId: "2", name: "Neo"}
-// 2: {userId: "1", name: "hyerin"}
-// 3: {userId: "3", name: "Amy"}
-
-
-// 배열데이터 안에 들어있는 여러개의 객체 데이터들은 기본적인 구조가 같고 유값을 의미하는 id 값들이 들어있음 (고유값이 들어있음)
-
-// 고유값 : userId
-// _.uniqBy: 첫번째인수 - 중복된 데이터가 들어있는 그 배열데이터, 두번째인수 - 중복을 구분할 고유한 속성의 이름
-// _.uniqBy메소드가 해당하는 배열의이름에서 해당하는 속성의 이름으로 고유한 값만 정리해서 반환해줌
-// 이미 중복이 발생한 그배열데이터에서 중복을 제거할때는 _.uniqBy사용
-// 하나의 배열데이터에서 어떤 특정한 속성의 이름으로 고유화를 시켜주는 메소드이고 사용하는 인수는 배열데이터 1개
-// console.log('uniqBy',_.uniqBy(usersC, 'userId')) //uniqBy (3) [{…}, {…}, {…}]
-// 0: {userId: "1", name: "hyerin"}
-// 1: {userId: "2", name: "Neo"}
-// 2: {userId: "3", name: "Amy"}
-
-// _.unionBy
-// 중복이 발생할 수 있는 배열데이터가 2개이고 합치기 전이라면 _.unionBy를 통해서 고유하게 합칠 수 있음
-// 첫번째인수, 두번째인수에 배열데이터이름적고 합칠 때 고유값으로 사용할 속성의이름을 세번째인수에 명시 세번째 인수에 해당하는 값을 고유하게 판단해서 두개의배열을 합쳐줌
-// 합치기 전, 여러개의 배열데이터를 적어주고 맨마지막에 배열데이터를 합칠때 고유화 작업을 시킬 속성의 이름을 명시해주면 고유화가 된 새로운 배열을 반환
-// const usersD = _.unionBy(usersA, usersB, 'userId') 
-// console.log('unionBy', usersD) //unionBy (3) [{…}, {…}, {…}]
-// 0: {userId: "1", name: "hyerin"}
-// 1: {userId: "2", name: "Neo"}
-// 2: {userId: "3", name: "Amy"}
-
-// 차이점: uniqBy는 배열데이터가 1개일 때 사용, unionBy는 배열데이터가 여러개 일 때 사용하는 개념
-
-const users = [
-  { userId: '1', name: 'hyerin' },
-  { userId: '2', name: 'Neo' },
-  { userId: '3', name: 'Amy' },
-  { userId: '4', name: 'Evan' },
-  { userId: '5', name: 'Lewis' }
-]
-
-const foundUser = _.find(users, { name: 'Amy' })
-const foundUserIndex = _.findIndex(users, { name: 'Amy' })
-console.log(foundUser) //{userId: "3", name: "Amy"}
-console.log(foundUserIndex) //2
-
-_.remove(users, { name: 'hyerin' })
-console.log(users) //(4) [{…}, {…}, {…}, {…}]
-// 0: {userId: "2", name: "Neo"}
-// 1: {userId: "3", name: "Amy"}
-// 2: {userId: "4", name: "Evan"}
-// 3: {userId: "5", name: "Lewis"}
+// 단순하게 하나의 메모리만 참조할 수 있는 문자데이터로 관리
+// 우리가 쓸 수있는 형태의 실제 자바스크립트 데이터처럼 변경되려면 JSON.PARSE 사용 반대로 다시 JSON화 시키려면 stringify 문자데이터화를 시켜주는 메소드 사용

@@ -1,0 +1,14 @@
+// json이라는 확장자를 가지고 있는 하나의 파일이 곧 하나의 데이터
+// 123 숫자데이터 , false 불린데이터 이런식으로 작성불가(두개의 데이터를 동시에 명시할 수 없음)
+// 하나의 json파일은 하나의 데이터 이기 때문
+
+// 하나의 객체데이터
+{
+  "string": "hyerin",
+  "number": 123,
+  "boolean": true,
+  "null": null,
+  "object": {},
+  "array": []
+  // "undefind": undefined사용불가 
+}
