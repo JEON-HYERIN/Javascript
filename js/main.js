@@ -1,57 +1,56 @@
-// JSON(JavaScript Object Notation)
-// json : 자바스크립트의 데이터를 표현하는 하나의 포맷
-// 서버와의 통신에서 데이터를 주고받는 하나의 포맷으로 사용
-// json포맷에서 사용할 수 있는 자료형 - undefined 제외하고 나머지 사용
-// 문자열(String): ""큰따옴표만 허용
-// json문법은 속성의 이름을 따옴표로 묶어줘야함
-
-// const user = {
-//   name: 'hyerin',
-//   age': 95,
-//   emails': [
-//     'abcd@gmail.com',
-//     'xyz@naver.com'
-//   ]
-// }
-
-// 자바스크립트 객체 표기법
-// 자바스크립트의 객체데이터는 속성부분에 따옴표로 묶어서 작성해도 무방
-// 자바스크립트파일 안에서는 따옴표를 안붙여도됨
-// but, company-name 같이 속성이름에 특수기호있으면 붙여야함
-// 특수기호는 객체데이터의 속성으로 해석이 안됨
-
-// import myData from '../myData.json'
-// json이라는 확장자를 가지고 있는 파일은 사실 하나의 문자데이터, json이라는 파일은 하나의 문자데이터
-// console.log(myData)
+// 자바스크립트에서 localStorage에 데이터를 저장하는 방법
 
 const user = {
-  'name': 'hyerin',
-  'age': 95,
-  'emails': [
+  name: 'hyerin',
+  age: 95,
+  emails: [
     'abcd@gmail.com',
     'xyz@naver.com'
   ]
 }
-console.log('user', user) //user {name: "hyerin", age: 95, emails: Array(2)}
 
-// JSON: 자바스크립트 전체의 영역에서 사용할 수 있는 하나의 전역 객체
-
-// stringify: 자바스크립트 파일 내부에서 어떤 특정 데이터를 JSON의 형태로, 즉 JSON의 포맷으로 문자데이터화시켜주는 메소드 
-// 인수부분에 객체데이터뿐만아니라 JAVASCRIPT 파일에서 사용할 수 있는 모든데이터를 stringify의 인수로 사용해서 JSON포맷으로(문자데이터로) 만들어서 활용할 수 있음
-const str = JSON.stringify(user)
-console.log('str', str) //str {"name":"hyerin","age":95,"emails":["abcd@gmail.com","xyz@naver.com"]}
-
-// 속성부분이 큰따옴표로 묶여있음
-// JSON이라는 포맷은 하나의 문자데이터로만 관리됨
-console.log(typeof str) //string
-
-// 그렇게 만들어진 문자데이터를 JSON이라는 전역객체에 PARSE메소드에 인수로 넣어서 분석해서 자바스크립트에서 활용할 수 있는 하나의 데이터로 재조립
-// 문자데이터를 JSON.PARSE를 이용해서 다시 자바스크립트의 실제데이터로 변경
-const obj = JSON.parse(str)
-console.log('obj', obj) //obj {name: "hyerin", age: 95, emails: Array(2)}
-// 실제객체데이터처럼출력
+localStorage.setItem('user', user)
+// localStroage에 데이터를 저장할 때는 그냥 우리가 평소에 사용하는 일반적인 객체라던가 배열을 사용하면안되고 문자데이터로 변환해서 저장해야함
 
 
 
-// 단순하게 하나의 메모리만 참조할 수 있는 문자데이터로 관리
-// 우리가 쓸 수있는 형태의 실제 자바스크립트 데이터처럼 변경되려면 JSON.PARSE 사용 반대로 다시 JSON화 시키려면 stringify 문자데이터화를 시켜주는 메소드 사용
+// user라는 객체데이터를 문자데이터화해서 localStorage에 user라는 이름으로 저장
+localStorage.setItem('user', JSON.stringify(user))
+console.log(localStorage.getItem('user')) //{"name":"hyerin","age":95,"emails":["abcd@gmail.com","xyz@naver.com"]}
+
+// 문자데이터형태로출력됨 
+
+
+
+// 객체데이터로 변환
+console.log(JSON.parse(localStorage.getItem('user'))) //{name: "hyerin", age: 95, emails: Array(2)}
+
+
+
+
+
+// // 저정한데이터 수정
+const str = localStorage.getItem('user')
+const obj = JSON.parse(str) 
+obj.age = 22
+console.log(obj)
+localStorage.setItem('user', JSON.stringify(obj)) //{"name":"hyerin","age":22,"emails":["abcd@gmail.com","xyz@naver.com"]}
+
+
+localStorage.removeItem('user')
+
+
+
+
+
+
+
+
+// localstorage: 데이터를 반영구적으로 사용 가능 / sessionStorage: 페이지를 닫을 때 데이터가 사라짐, 일반적인 상황에서는 localStrage 활용성이 높음
+
+// 예제
+// localStorage.setItem('문자데이터 key', '문자데이터 value')
+// 저장하는 데이터를 문자데이터로 저장하는 것을 권장, 일부 문자데이터가 아닌 경우에는 저장이 안될 수 있음
+// 객체, 배열데이터는 JSON.stringify를 이용해 문자데이터화 시켜서 데이터 저장하고 저장된 문자데이터를 가지고와서 parse라는 메소드를 통해 분석해서 자바스크립트 파일내부에서 하나의데이터로 활용
+// 특정한데이터를 읽어오는용도 -> getItem('key') 해당하는 데이터의 속성값만 key값만 알면되기때문에 인수를 하나만 적으면됨
+// 데이터를 제거하고싶다면 removeItem 메소드실행해서 해당하는 데이터 key값을 적어줌
