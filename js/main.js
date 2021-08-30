@@ -1,53 +1,49 @@
-// Loops
-// while loop, while the condition is truthy,
-// body code is executed.
-let i = 3;
-while (i > 0) {
-  console.log(`while: ${i}`);
-  i--;
-}
-// 출력값
-// while: 3, while: 2, while: 1
-
-
-// do while loop, body code is executed first,
-// then check the condition.
-do {
-  console.log(`do while: ${i}`);
-  i--;
-} while (i > 0);
-// 출력값
-// do while: 0
-
-
-// break, continue
-// Q1. iterate from 0 to 10 and print only even numbers (use continue)
-for (let i = 0; i < 11; i++) {
-  if ( i % 2 !== 0) {
-    continue;
+// Callback function using function expression
+function randomQuiz(answer, printYes, printNo) {
+  if (answer === 'love you') {
+    printYes();
+  } else {
+    printNo();
   }
-  console.log(`Q1: ${i}`);
 }
-// Q1: 0
-// Q1: 2
-// Q1: 4
-// Q1: 6
-// Q1: 8
-// Q1: 10
+const printYes = function () {
+  console.log('yes');
+}
 
-// Q2. iterate from 0 to 10 and print numbers until reaching 8 (use break)
-for ( let i = 0; i < 11; i++) {
-  if (i > 8) {
-    break;
-  }
-  console.log(`Q2: ${i}`);
+const printNo = function () {
+  console.log('no');
 }
-// Q2: 0
-// Q2: 1
-// Q2: 2
-// Q2: 3
-// Q2: 4
-// Q2: 5
-// Q2: 6
-// Q2: 7
-// Q2: 8
+
+randomQuiz('love you',printYes,printNo); //yes
+randomQuiz('wrong',printYes,printNo); //no
+
+
+function calculate(command, a, b) {
+  switch (command) {
+    case 'add':
+      return a + b;
+      break;
+    case 'subtract':
+      return a - b;
+      break;
+    case 'divide':
+      return a / b;
+      break;
+    case 'multiply':
+      return a * b;
+    case 'remainder':
+      return a % b;
+    default:
+      console.log('해당없음');
+  }
+};
+
+console.log(calculate('add',2,10));
+console.log(calculate('subtract',2,2));
+console.log(calculate('divide',2,2));
+console.log(calculate('multiply',2,2));
+console.log(calculate('remainder',2,2));
+console.log(calculate('oops',2,2));
+// const add = function () {
+//   console.log(a + b);
+// }
